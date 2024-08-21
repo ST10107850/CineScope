@@ -50,8 +50,8 @@ const Hero = () => {
         naturalSlideWidth={100}
         naturalSlideHeight={125}
         totalSlides={slides.length}
-        isPlaying={true}
-        interval={3000}
+        isPlaying={true}  
+        interval={9000}  
       >
         <div className="relative w-full h-[70vh]">
           <Slider>
@@ -92,7 +92,7 @@ const Hero = () => {
                         </div>
                         <div className="flex items-center">
                           <span>
-                            {/* Assuming you have a way to get certification data */}
+                        
                             {slide.certification || "N/A"}
                           </span>
                         </div>

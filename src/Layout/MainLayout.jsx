@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 const MainLayout = () => {
   return (
     <div className='bg-dark-custom'>
-        <NavBar className="fixed"/>
+        <NavBar/>
         <Outlet/>
     </div>
   )
