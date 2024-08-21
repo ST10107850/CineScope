@@ -1,21 +1,27 @@
-import Hero from "./components/Hero";
-import LatestMovies from "./components/LatestMovies";
-import LatestSeries from "./components/LatestSeries";
-import NavBar from "./components/NavBar";
-import TopSlider from "./components/TopSlider";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import HomePage from "./Pages/HomePage";
+import MainLayout from "./Layout/MainLayout";
+import MoviesPage from "./Pages/MoviesPage";
+import SeriesPage from "./Pages/Seriespage";
+
+
 
 function App() {
-  return (
-    <div className="bg-dark-custom">
-      <NavBar />
-      <Hero/>
-      <TopSlider />
-      <div className="mt-[55vh]"> {/* Add margin or padding here for spacing */}
-        <LatestMovies />
-      </div>
-      <LatestSeries/>
-    </div>
-  );
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element ={<MainLayout/>}>
+        <Route index element={<HomePage/>}/>
+        <Route path="/movies" element={<MoviesPage/>}/>
+        <Route path="/series" element={<SeriesPage/>}/>
+      </Route>
+    )
+  )
+  return <RouterProvider router={router}/>;
 }
 
 export default App;

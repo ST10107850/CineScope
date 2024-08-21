@@ -1,29 +1,29 @@
-import React from "react";
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <div className="bg-gray-900"> {/* Set background color here */}
       <div className="container mx-auto py-4">
         <div className="flex items-center justify-between">
-          <a href="#" className="text-white text-2xl font-bold">
+          <NavLink to="/" className="text-white text-2xl font-bold">
             <i className="bx bx-movie-play bx-tada text-red-500"></i>Fl
             <span className="text-red-500">i</span>x
-          </a>
+          </NavLink>
           <ul className="hidden md:flex space-x-6 text-white">
             <li>
-              <a href="#">Home</a>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <a href="#">Genre</a>
+              <NavLink to="#">Genre</NavLink>
             </li>
             <li>
-              <a href="#">Movies</a>
+              <NavLink to="/movies">Movies</NavLink>
             </li>
             <li>
-              <a href="#">Series</a>
+              <NavLink to="/series">Series</NavLink>
             </li>
             <li>
-              <a href="#">About</a>
+              <NavLink to="#">About</NavLink>
             </li>
           </ul>
           {/* Mobile Menu Toggle */}

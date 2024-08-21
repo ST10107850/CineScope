@@ -1,5 +1,12 @@
-import React from "react";
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
+import { AiFillStar } from "react-icons/ai";
+import { IoTime } from "react-icons/io5";
+import {
+  CarouselProvider,
+  Slider,
+  Slide,
+  ButtonBack,
+  ButtonNext,
+} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import supergirl from "../assets/Images/series/supergirl.jpg";
 import captainMarvel from "../assets/Images/movies/captain-marvel.png";
@@ -9,12 +16,48 @@ import wandaVision from "../assets/Images/series/wanda.png";
 import batMan from "../assets/Images/movies/bat-man.jpg";
 
 const movieItems = [
-  { image: supergirl, title: "Supergirl" },
-  { image: captainMarvel, title: "Captain Marvel" },
-  { image: demonSlayer, title: "Infinity Train" },
-  { image: bloodshot, title: "Bloodshot" },
-  { image: wandaVision, title: "Wanda Vision" },
-  { image: batMan, title: "The Dark Knight" },
+  {
+    image: supergirl,
+    title: "Supergirl",
+    rating: "9.5",
+    time: "120",
+    age: "16+",
+  },
+  {
+    image: captainMarvel,
+    title: "Captain Marvel",
+    rating: "9.5",
+    time: "120",
+    age: "16+",
+  },
+  {
+    image: demonSlayer,
+    title: "Infinity Train",
+    rating: "9.5",
+    time: "120",
+    age: "16+",
+  },
+  {
+    image: bloodshot,
+    title: "Bloodshot",
+    rating: "9.5",
+    time: "120",
+    age: "16+",
+  },
+  {
+    image: wandaVision,
+    title: "Wanda Vision",
+    rating: "9.5",
+    time: "120",
+    age: "16+",
+  },
+  {
+    image: batMan,
+    title: "The Dark Knight",
+    rating: "9.5",
+    time: "120",
+    age: "16+",
+  },
 ];
 
 const LatestMovies = ({ className }) => {
@@ -31,15 +74,17 @@ const LatestMovies = ({ className }) => {
         touchEnabled={true}
         dragEnabled={true}
       >
-        <div className="relative w-full h-full px-20">
-        <div className="relative w-full">
-            <div className="border-t-2 border-blue-500 mt-4"></div>
-          </div>
-          <h2 className="text-white text-2xl font-bold my-4">Latest Movies</h2>
+        <div className="relative w-full h-full px-20 mt-20">
           <div className="relative w-full">
             <div className="border-t-2 border-blue-500"></div>
           </div>
-          <Slider className="relative">
+          <h2 className="text-white uppercase text-2xl font-bold my-4">
+            Latest Movies
+          </h2>
+          <div className="relative w-full">
+            <div className="border-t-2 border-blue-500 mt-4"></div>
+          </div>
+          <Slider className="relative mt-14">
             {movieItems.map((movie, index) => (
               <Slide key={index} index={index}>
                 <div className="flex justify-center items-center h-[400px]">
@@ -52,24 +97,33 @@ const LatestMovies = ({ className }) => {
                     <div className="absolute inset-0 bg-black opacity-50 transition-opacity duration-300 hover:opacity-30"></div>
                     <div className="absolute inset-0 flex flex-col justify-end items-center text-white p-4">
                       <h3 className="text-xl font-bold mb-2">{movie.title}</h3>
+                      <div className="flex flex-row items-center space-x-3">
+                        <p className="flex flex-row items-center ">
+                          <AiFillStar className="text-blue-500" />
+                          {movie.rating}
+                        </p>
+                        <p className="flex flex-row items-center">
+                          <IoTime className="text-blue-500" />
+                          {movie.rating} mins
+                        </p>
+                        <p className="flex flex-row items-center">HD</p>
+                        <p className="flex flex-row items-center">
+                          {movie.age}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </Slide>
             ))}
           </Slider>
-          <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center mb-4 px-24">
-            <div className="flex-1 flex justify-start">
-              <ButtonBack className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-600 transform transition-transform duration-300">
-                &larr;
-              </ButtonBack>
-            </div>
-            <div className="flex-1 flex justify-end">
-              <ButtonNext className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-600 transform transition-transform duration-300">
-                &rarr;
-              </ButtonNext>
-            </div>
-           
+          <div className="absolute inset-y-1/2 flex justify-between items-center w-11/12 transform -translate-y-1/2 px-24">
+            <ButtonBack className="bg-gray-800 text-white px-4 py-2 rounded-full hover:bg-gray-600 transform transition-transform duration-300">
+              &larr;
+            </ButtonBack>
+            <ButtonNext className="bg-gray-800 text-white px-4 py-2 rounded-full hover:bg-gray-600 transform transition-transform duration-300">
+              &rarr;
+            </ButtonNext>
           </div>
         </div>
       </CarouselProvider>
