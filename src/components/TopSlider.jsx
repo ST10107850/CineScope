@@ -1,4 +1,5 @@
 import { AiFillStar } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { IoTime } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { CarouselProvider, Slider, Slide } from "pure-react-carousel";
@@ -69,6 +70,7 @@ const TopSlider = ({ className }) => {
             {movieItems.map((slide, slideIndex) => (
               <Slide key={slideIndex} index={slideIndex}>
                 <div className="flex w-full h-[350px] ">
+                <Link to={`/series/${slide.id}`}>
                   <div className="relative w-full h-full transition-transform duration-300 hover:scale-105">
                     <img
                       src={`https://image.tmdb.org/t/p/w500${slide.poster_path}`}
@@ -89,6 +91,7 @@ const TopSlider = ({ className }) => {
                       </div>
                     </div>
                   </div>
+                  </Link>
                 </div>
               </Slide>
             ))}

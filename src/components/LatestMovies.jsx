@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { IoTime } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import {
   CarouselProvider,
   Slider,
@@ -14,7 +15,7 @@ const LatestMovies = ({ className }) => {
   const [movieItems, setMovies] = useState([]);
 
   const fetchMovies = async () => {
-    const apiKey = "b3c8574ec4e0950c0501b1bf409be1e0"; // Replace with your API key
+    const apiKey = "b3c8574ec4e0950c0501b1bf409be1e0";
     const apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`;
 
     try {
@@ -65,12 +66,15 @@ const LatestMovies = ({ className }) => {
             {movieItems.map((movie, index) => (
               <Slide key={index} index={index}>
                 <div className="flex justify-center items-center h-[300px] ml-14  mr-14 w-[200px]">
+                <Link to={`/movies/${movie.id}`}>
                   <div className="relative h-full transition-transform duration-300 hover:scale-105">
+                  
                     <img
                       src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                       alt={movie.title}
                       className="object-cover w-full h-full transition-opacity duration-300 hover:opacity-70"
                     />
+                    
                     <div className="absolute inset-0 bg-black opacity-20 transition-opacity duration-300 hover:opacity-30"></div>
                     <div className="absolute inset-0 flex flex-col justify-end items-center text-white p-4">
                       <h3 className="text-xl font-bold">{movie.title}</h3>
@@ -87,6 +91,7 @@ const LatestMovies = ({ className }) => {
                       </div>
                     </div>
                   </div>
+                  </Link>
                 </div>
               </Slide>
             ))}

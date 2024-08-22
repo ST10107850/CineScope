@@ -7,9 +7,10 @@ import {
 import HomePage from "./Pages/HomePage";
 import MainLayout from "./Layout/MainLayout";
 import MoviesPage from "./Pages/MoviesPage";
-import SeriesPage from "./Pages/Seriespage";
-import DetailPage, { detailLoader } from "./Pages/MoviesDetailPage";
+import SeriesPage from "./Pages/SeriesPage";
+import DetailPage from "./Pages/MoviesDetailPage";
 import SeriesDetailsPage from "./Pages/SeriesDetailsPage";
+import { seriesDetailLoader, detailLoader } from "./Loaders"; 
 
 function App() {
   const router = createBrowserRouter(
@@ -26,7 +27,7 @@ function App() {
         <Route
           path="/series/:id"
           element={<SeriesDetailsPage />}
-          loader={detailLoader}
+          loader={seriesDetailLoader} // Use the loader here
         />
       </Route>
     )

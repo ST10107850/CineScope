@@ -5,7 +5,7 @@ const Series = () => {
   const [seriesData, setSeries] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedGenre, setSelectedGenre] = useState("All"); // State to track selected genre
+  const [selectedGenre, setSelectedGenre] = useState("All");
 
   const fetchSeries = async (page = 1, genre = "") => {
     const apiKey = "b3c8574ec4e0950c0501b1bf409be1e0";
@@ -48,7 +48,7 @@ const Series = () => {
 
   const handleGenreChange = (genre) => {
     setSelectedGenre(genre);
-    setCurrentPage(1); // Reset to the first page when genre changes
+    setCurrentPage(1);
   };
 
   const getGenreId = (genre) => {
@@ -62,16 +62,13 @@ const Series = () => {
       Crime: 80,
       "Science Fiction": 10765,
     };
-    return genres[genre] || ""; // Return genre ID or an empty string for "All"
+    return genres[genre] || "";
   };
 
   return (
     <div className="p-11">
-      {/* Title Section */}
       <h2 className="text-3xl font-bold mb-8 text-center uppercase text-white">
-        {selectedGenre === "All"
-          ? "Featured Series"
-          : `${selectedGenre} Series`}
+        {selectedGenre === "All" ? "Featured Series" : `${selectedGenre} Series`}
       </h2>
 
       <div className="flex flex-col md:flex-row">
@@ -118,12 +115,11 @@ const Series = () => {
           </div>
         </div>
 
-        {/* Series Grid with Vertical Scroll */}
         <div className="md:w-3/4 overflow-y-auto h-[60vh] md:h-[70vh]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {seriesData.map((series, index) => (
+            {seriesData.map((series) => (
               <div
-                key={index}
+                key={series.id}
                 className="relative shadow-lg rounded-lg overflow-hidden group"
               >
                 <Link to={`/series/${series.id}`}>
