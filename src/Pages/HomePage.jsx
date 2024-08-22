@@ -9,9 +9,7 @@ const HomePage = () => {
     <div>
       <Hero />
       <TopSlider />
-      <div className="mt-[60vh]">
-        <LatestMovies />
-      </div>
+      <LatestMovies />
       <LatestSeries />
     </div>
   );

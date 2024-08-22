@@ -37,7 +37,7 @@ const SeriesAndMovieHero = ({ title }) => {
         isPlaying={true}
         interval={3000}
       >
-        <div className="relative w-full h-[80vh]">
+        <div className="relative w-full h-full md:h-[85vh]">
           <Slider>
             {slides.map((slide, index) => (
               <Slide key={index}>
@@ -53,7 +53,7 @@ const SeriesAndMovieHero = ({ title }) => {
                 >
                   <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-30 mb-28">
                     <h1 className="text-white font-bold uppercase text-3xl text-center mt-20">{slide.title}</h1>
-                    <p className="w-[80%] md:w-[50%] lg:w-[30%] text-white text-center mt-5">{slide.overview}</p>
+                    <p className="w-[80%] md:w-[50%] lg:w-[30%] text-white text-center hidden md:block mt-5">{slide.overview}</p>
                   </div>
                 </div>
               </Slide>

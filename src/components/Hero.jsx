@@ -49,12 +49,12 @@ const Hero = () => {
     <div className="relative bg-dark-custom overflow-hidden">
       <CarouselProvider
         naturalSlideWidth={100}
-        naturalSlideHeight={56} // Adjusted to make aspect ratio more suitable
+        naturalSlideHeight={56} 
         totalSlides={slides.length}
         isPlaying={true}  
         interval={9000}  
       >
-        <div className="relative w-full h-[90vh]">
+        <div className="relative w-full h-full md:h-[90vh]">
           <Slider>
             {slides.map((slide, index) => {
               const isLongDescription = slide.overview.length > descriptionLimit;
@@ -63,7 +63,7 @@ const Hero = () => {
               return (
                 <Slide key={index}>
                   <div
-                    className="relative w-full h-full"
+                    className="relative w-full h-[100vh] md:h-full"
                     style={{
                       backgroundImage: `url(${`https://image.tmdb.org/t/p/w780${slide.poster_path}`})`,
                       backgroundSize: 'cover',
@@ -74,19 +74,17 @@ const Hero = () => {
                   >
                     <div className="absolute inset-0 bg-black opacity-30"></div>
                     <div className="absolute inset-0 flex flex-col justify-center items-start text-white p-12 ml-10">
-                      <div className="text-3xl font-bold mb-4">
+                      <div className="text-base sm:text-xl md:text-3xl font-bold mb-4">
                         {slide.original_title}
                       </div>
-                      <div className="flex space-x-4 mb-4">
+                      <div className="flex space-x-4 mb-4 text-xs sm:text-sm md:text-base">
                         <div className="flex items-center">
                           <AiFillStar className="text-yellow-400" />
-                          <span className="ml-2 flex items-center">
-                            {slide.vote_average}
-                          </span>
+                          <span className="ml-2">{slide.vote_average}</span>
                         </div>
                         <div className="flex items-center">
                           <IoTime className="text-white" />
-                          <span className="ml-2 flex items-center">
+                          <span className="ml-2">
                             {slide.runtime ? `${slide.runtime} minutes` : "N/A"}
                           </span>
                         </div>
@@ -97,7 +95,7 @@ const Hero = () => {
                           <span>{slide.certification || "N/A"}</span>
                         </div>
                       </div>
-                      <div className="mb-4 max-w-lg">
+                      <div className="hidden sm:block mb-4 text-xs sm:text-sm md:text-base md:max-w-lg">
                         <p>
                           {showFullDescription || !isLongDescription
                             ? slide.overview
@@ -124,10 +122,10 @@ const Hero = () => {
               );
             })}
           </Slider>
-          <ButtonBack className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center text-2xl">
+          <ButtonBack className="absolute hidden sm:block left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center text-2xl">
             &lt;
           </ButtonBack>
-          <ButtonNext className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center text-2xl">
+          <ButtonNext className="absolute hidden sm:block right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center text-2xl">
             &gt;
           </ButtonNext>
         </div>

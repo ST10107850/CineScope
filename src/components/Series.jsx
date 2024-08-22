@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from 'react-responsive';
 
 const Series = () => {
   const [seriesData, setSeries] = useState([]);
@@ -65,58 +66,83 @@ const Series = () => {
     return genres[genre] || "";
   };
 
+  // Media query hook
+  const isMobile = useMediaQuery({ query: '(max-width: 639px)' });
+  const isMdOrLg = useMediaQuery({ query: '(min-width: 768px)' });
+
   return (
-    <div className="p-11">
+    <div className="p-4">
       <h2 className="text-3xl font-bold mb-8 text-center uppercase text-white">
         {selectedGenre === "All" ? "Featured Series" : `${selectedGenre} Series`}
       </h2>
 
-      <div className="flex flex-col md:flex-row">
-        <div className="md:w-1/4 mb-8 md:mb-0 md:mr-6 bg-slate-700 p-5 rounded-md h-[60vh]">
-          <div className="space-y-4">
-            <button
-              onClick={() => handleGenreChange("All")}
-              className={`w-full py-2 px-4 rounded-md font-semibold ${
-                selectedGenre === "All"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-black hover:bg-gray-300"
-              }`}
-            >
-              All
-            </button>
+      <div className={`flex ${isMobile ? "flex-col" : "flex-row"} w-full`}>
+        {!isMobile && (
+          <div className="hidden md:block w-1/4 mb-8 md:mb-0 md:mr-6 bg-slate-700 p-5 rounded-md h-full">
+            <div className="space-y-4">
+              <button
+                onClick={() => handleGenreChange("All")}
+                className={`w-full py-2 px-4 rounded-md font-semibold ${
+                  selectedGenre === "All"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-black hover:bg-gray-300"
+                }`}
+              >
+                All
+              </button>
 
-            <div className="bg-white shadow-md rounded-md p-4">
-              <h3 className="text-lg font-semibold mb-2">Genres</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  "Action",
-                  "Drama",
-                  "Comedy",
-                  "Horror",
-                  "Thriller",
-                  "Romance",
-                  "Crime",
-                  "Science Fiction",
-                ].map((genre) => (
-                  <button
-                    key={genre}
-                    onClick={() => handleGenreChange(genre)}
-                    className={`px-4 py-2 rounded-md ${
-                      selectedGenre === genre
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-black hover:bg-gray-300"
-                    }`}
-                  >
-                    {genre}
-                  </button>
-                ))}
+              <div className="bg-white shadow-md rounded-md p-4">
+                <h3 className="text-lg font-semibold mb-2">Genres</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    "Action",
+                    "Drama",
+                    "Comedy",
+                    "Horror",
+                    "Thriller",
+                    "Romance",
+                    "Crime",
+                    "Science Fiction",
+                  ].map((genre) => (
+                    <button
+                      key={genre}
+                      onClick={() => handleGenreChange(genre)}
+                      className={`px-4 py-2 rounded-md ${
+                        selectedGenre === genre
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-200 text-black hover:bg-gray-300"
+                      }`}
+                    >
+                      {genre}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
-        <div className="md:w-3/4 overflow-y-auto h-[60vh] md:h-[70vh]">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className={`flex-1 overflow-y-auto ${isMobile ? "w-full" : "md:w-3/4"} h-[60vh] md:h-[70vh]`}>
+          {isMobile && (
+            <div className="mb-4">
+              <select
+                value={selectedGenre}
+                onChange={(e) => handleGenreChange(e.target.value)}
+                className="w-full p-2 rounded-md bg-white text-black"
+              >
+                <option value="All">All</option>
+                <option value="Action">Action</option>
+                <option value="Drama">Drama</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Horror">Horror</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Romance">Romance</option>
+                <option value="Crime">Crime</option>
+                <option value="Science Fiction">Science Fiction</option>
+              </select>
+            </div>
+          )}
+          <div className={`grid ${isMdOrLg ? "grid-cols-3" : "grid-cols-2"} gap-8`}>
             {seriesData.map((series) => (
               <div
                 key={series.id}
@@ -132,7 +158,6 @@ const Series = () => {
               </div>
             ))}
           </div>
-
           <div className="flex justify-center mt-10">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
