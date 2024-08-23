@@ -213,7 +213,7 @@ const NavBar = () => {
             </div>
 
             {searchQuery && (
-              <div className="absolute left-0 top-full mt-2 w-full max-h-60 overflow-y-auto bg-gray-800 rounded-md shadow-lg z-20">
+              <div className="absolute left-0 top-full mt-2 w-auto max-h-60 overflow-y-auto bg-gray-800 rounded-md shadow-lg z-20">
                 {loading && <div className="text-white p-2">Loading...</div>}
                 {results.length > 0 ? (
                   <ul className="p-2">
@@ -253,55 +253,69 @@ const NavBar = () => {
             )}
           </div>
 
-          <div className="lg:hidden">
+          <div className="md:hidden flex items-center">
             <button onClick={toggleMenu} className="text-white">
               {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
 
-          <div className="hidden lg:flex items-center space-x-4">
-            <NavLink to="/" className="text-white">Home</NavLink>
-            <NavLink to="/movies" className="text-white">Movies</NavLink>
-            <NavLink to="/series" className="text-white">Series</NavLink>
+          <div className="hidden md:flex space-x-10">
+            <NavLink
+              to="/"
+              className="text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/movies"
+              className="text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+            >
+              Movies
+            </NavLink>
+            <NavLink
+              to="/series"
+              className="text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+            >
+              Series
+            </NavLink>
+            <NavLink
+              to="/about"
+              className="text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+            >
+              About
+            </NavLink>
           </div>
+        </div>
+
+        <div
+          className={`md:hidden mt-4 ${isMenuOpen ? "block" : "hidden"}`}
+        >
+          <NavLink
+            to="/"
+            className="block text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/movies"
+            className="mt-2 block text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+          >
+            Movies
+          </NavLink>
+          <NavLink
+            to="/series"
+            className="mt-2 block text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+          >
+            Series
+          </NavLink>
+          <NavLink
+            to="/about"
+            className="mt-2 block text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+          >
+            About
+          </NavLink>
         </div>
       </div>
-
-      {isMenuOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-80 z-40 lg:hidden">
-          <div className="bg-gray-800 w-3/4 max-w-sm p-4">
-            <button
-              onClick={toggleMenu}
-              className="text-white text-xl mb-4"
-            >
-              <FiX />
-            </button>
-            <div className="flex flex-col space-y-4">
-              <NavLink
-                to="/"
-                className="text-white text-lg"
-                onClick={toggleMenu}
-              >
-                Home
-              </NavLink>
-              <NavLink
-                to="/about"
-                className="text-white text-lg"
-                onClick={toggleMenu}
-              >
-                About
-              </NavLink>
-              <NavLink
-                to="/contact"
-                className="text-white text-lg"
-                onClick={toggleMenu}
-              >
-                Contact
-              </NavLink>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
