@@ -268,7 +268,7 @@ const NavBar = () => {
               activeClassName="text-red-500"
               className="hover:text-red-500"
             >
-              Movies
+              Movie
             </NavLink>
             <NavLink
               to="/series"
