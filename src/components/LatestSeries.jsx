@@ -107,7 +107,7 @@ const LatestSeries = ({ className }) => {
               </Slide>
             ))}
           </Slider>
-          <div className="absolute hidden md:block inset-y-1/2 flex justify-between items-center w-full px-6 sm:px-20 transform -translate-y-1/2">
+          <div className="/md:block inset-y-1/2 flex justify-center space-x-5 items-center w-full px-6 sm:px-20 transform -translate-y-1/2">
             <ButtonBack className="bg-gray-800 text-white px-4 py-2 rounded-full hover:bg-gray-600 transform transition-transform duration-300">
               &larr;
             </ButtonBack>

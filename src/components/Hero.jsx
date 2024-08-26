@@ -112,7 +112,7 @@ const Hero = () => {
                       </div>
                       <Link
                         to={`/movies/${slide.id}`}
-                        className="bg-red-500 text-white py-2 px-4 rounded flex items-center"
+                        className="bg-red-500 text-white px-1 md:py-2 md:px-4 rounded md:flex items-center"
                       >
                         <span>View now</span>
                       </Link>

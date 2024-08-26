@@ -151,7 +151,7 @@ const NavBar = () => {
               <span className="hidden md:inline">cope</span>
             </NavLink>
 
-            <div className="relative flex items-center w-full">
+            <div className="relative flex flex-col md:flex-row items-center w-full">
               <div className="flex items-center bg-transparent border border-white text-white rounded-2xl px-2 py-1 w-full lg:w-96 md:w-64 sm:w-48">
                 <FiSearch className="text-white w-5 h-5 mr-2" />
 
@@ -192,7 +192,7 @@ const NavBar = () => {
 
               {(selectedOption === "Movies" || selectedOption === "Series") && (
                 <select
-                  className="ml-2 bg-gray-700 text-white rounded-md"
+                  className="mt-2 md:mt-0 md:ml-2 bg-gray-700 text-white rounded-md"
                   value={selectedGenre}
                   onChange={handleGenreChange}
                 >
@@ -239,7 +239,7 @@ const NavBar = () => {
                               {item.title || item.name}
                             </h3>
                             <p className="text-xs text-gray-400">
-                              {item.release_date || item.first_air_date}
+                              {item.release_date || item.first_air_date || ""}
                             </p>
                           </div>
                         </li>
@@ -247,75 +247,92 @@ const NavBar = () => {
                     ))}
                   </ul>
                 ) : (
-                  <div className="text-white p-2">No results found</div>
+                  !loading && (
+                    <div className="text-white p-2">No results found</div>
+                  )
                 )}
               </div>
             )}
           </div>
 
-          <div className="md:hidden flex items-center">
-            <button onClick={toggleMenu} className="text-white">
-              {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-            </button>
-          </div>
-
-          <div className="hidden md:flex space-x-10">
-            <NavLink
-              to="/"
-              className="text-sm font-semibold text-white hover:text-red-500 transition duration-300"
-            >
-              Home
-            </NavLink>
+          <div className="hidden lg:flex space-x-4 text-white text-lg font-semibold">
             <NavLink
               to="/movies"
-              className="text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+              activeClassName="text-red-500"
+              className="hover:text-red-500"
             >
               Movies
             </NavLink>
             <NavLink
               to="/series"
-              className="text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+              activeClassName="text-red-500"
+              className="hover:text-red-500"
             >
               Series
             </NavLink>
             <NavLink
-              to="/about"
-              className="text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+              to="/watchlist"
+              activeClassName="text-red-500"
+              className="hover:text-red-500"
             >
-              About
+              Watchlist
+            </NavLink>
+            <NavLink
+              to="/account"
+              activeClassName="text-red-500"
+              className="hover:text-red-500"
+            >
+              Account
             </NavLink>
           </div>
-        </div>
 
-        <div
-          className={`md:hidden mt-4 ${isMenuOpen ? "block" : "hidden"}`}
-        >
-          <NavLink
-            to="/"
-            className="block text-sm font-semibold text-white hover:text-red-500 transition duration-300"
-          >
-            Home
-          </NavLink>
+          <div className="lg:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-white focus:outline-none"
+            >
+              {isMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {isMenuOpen && (
+        <div className="lg:hidden bg-gray-900 text-white py-2 px-6">
           <NavLink
             to="/movies"
-            className="mt-2 block text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+            activeClassName="text-red-500"
+            className="block py-1 hover:text-red-500"
+            onClick={() => setIsMenuOpen(false)}
           >
             Movies
           </NavLink>
           <NavLink
             to="/series"
-            className="mt-2 block text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+            activeClassName="text-red-500"
+            className="block py-1 hover:text-red-500"
+            onClick={() => setIsMenuOpen(false)}
           >
             Series
           </NavLink>
           <NavLink
-            to="/about"
-            className="mt-2 block text-sm font-semibold text-white hover:text-red-500 transition duration-300"
+            to="/watchlist"
+            activeClassName="text-red-500"
+            className="block py-1 hover:text-red-500"
+            onClick={() => setIsMenuOpen(false)}
           >
-            About
+            Watchlist
+          </NavLink>
+          <NavLink
+            to="/account"
+            activeClassName="text-red-500"
+            className="block py-1 hover:text-red-500"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Account
           </NavLink>
         </div>
-      </div>
+      )}
     </div>
   );
 };
