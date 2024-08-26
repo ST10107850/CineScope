@@ -47,8 +47,8 @@ const NavBar = () => {
       setScrolling(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleDropdown = () => {
@@ -125,7 +125,7 @@ const NavBar = () => {
       );
       setSelectedMovie(response.data);
       setResults([]);
-      setSearchQuery(""); 
+      setSearchQuery("");
     } catch (error) {
       console.error("Error fetching movie details:", error);
     }
@@ -256,6 +256,13 @@ const NavBar = () => {
           </div>
 
           <div className="hidden lg:flex space-x-4 text-white text-lg font-semibold">
+          <NavLink
+              to="/"
+              activeClassName="text-red-500"
+              className="hover:text-red-500"
+            >
+              Home
+            </NavLink>
             <NavLink
               to="/movies"
               activeClassName="text-red-500"
@@ -271,18 +278,11 @@ const NavBar = () => {
               Series
             </NavLink>
             <NavLink
-              to="/watchlist"
+              to="/about"
               activeClassName="text-red-500"
               className="hover:text-red-500"
             >
-              Watchlist
-            </NavLink>
-            <NavLink
-              to="/account"
-              activeClassName="text-red-500"
-              className="hover:text-red-500"
-            >
-              Account
+              About
             </NavLink>
           </div>
 

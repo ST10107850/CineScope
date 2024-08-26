@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 const Hero = () => {
   const [slides, setSlides] = useState([]);
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const descriptionLimit = 300; 
+  const descriptionLimit = 300;
 
   const fetchMovies = async () => {
     const apiKey = "b3c8574ec4e0950c0501b1bf409be1e0";
@@ -49,16 +49,18 @@ const Hero = () => {
     <div className="relative bg-dark-custom overflow-hidden">
       <CarouselProvider
         naturalSlideWidth={100}
-        naturalSlideHeight={56} 
+        naturalSlideHeight={56}
         totalSlides={slides.length}
-        isPlaying={true}  
-        interval={9000}  
+        isPlaying={true}
+        interval={9000}
       >
         <div className="relative w-full h-full md:h-[90vh]">
           <Slider>
             {slides.map((slide, index) => {
-              const isLongDescription = slide.overview.length > descriptionLimit;
-              const shortDescription = slide.overview.substring(0, descriptionLimit) + "...";
+              const isLongDescription =
+                slide.overview.length > descriptionLimit;
+              const shortDescription =
+                slide.overview.substring(0, descriptionLimit) + "...";
 
               return (
                 <Slide key={index}>
@@ -66,9 +68,9 @@ const Hero = () => {
                     className="relative w-full h-[100vh] md:h-full"
                     style={{
                       backgroundImage: `url(${`https://image.tmdb.org/t/p/w780${slide.poster_path}`})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      height: '100%',
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      height: "100%",
                       opacity: 0.9,
                     }}
                   >
