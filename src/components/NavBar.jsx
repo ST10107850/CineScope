@@ -135,10 +135,13 @@ const NavBar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const getClassName = ({ isActive }) =>
+    `hover:text-red-500 ${isActive ? 'text-red-500' : ''}`;
+
   return (
     <div
-      className={`fixed top-0 left-0 right-0 z-50 shadow-lg transition-colors duration-300 ${
-        scrolling ? "bg-gray-900" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 shadow-base bg-gray-900 transition-colors duration-300 ${
+        scrolling ? 'bg-gray-900' : 'md:bg-transparent'
       }`}
     >
       <div className="container mx-auto px-6 py-4">
@@ -154,25 +157,23 @@ const NavBar = () => {
             <div className="relative flex flex-col md:flex-row items-center w-full">
               <div className="flex items-center bg-transparent border border-white text-white rounded-2xl px-2 py-1 w-full lg:w-96 md:w-64 sm:w-48">
                 <FiSearch className="text-white w-5 h-5 mr-2" />
-
                 <div className="relative flex-grow">
                   <button
                     onClick={toggleDropdown}
                     className={`bg-transparent text-white px-2 rounded-2xl text-sm focus:outline-none ${
-                      isOpen ? "bg-gray-700" : ""
+                      isOpen ? 'bg-gray-700' : ''
                     }`}
                   >
                     {selectedOption}
                   </button>
-
                   {isOpen && (
                     <ul className="absolute left-0 mt-2 w-32 bg-gray-800 rounded-md shadow-lg z-10">
-                      {["All", "Movies", "Series", "People"].map((option) => (
+                      {['All', 'Movies', 'Series', 'People'].map((option) => (
                         <li
                           key={option}
                           onClick={() => handleOptionClick(option)}
                           className={`px-4 py-2 text-white hover:bg-gray-700 cursor-pointer ${
-                            selectedOption === option ? "bg-gray-700" : ""
+                            selectedOption === option ? 'bg-gray-700' : ''
                           }`}
                         >
                           {option}
@@ -189,8 +190,7 @@ const NavBar = () => {
                   onChange={handleSearchInputChange}
                 />
               </div>
-
-              {(selectedOption === "Movies" || selectedOption === "Series") && (
+              {(selectedOption === 'Movies' || selectedOption === 'Series') && (
                 <select
                   className="mt-2 md:mt-0 md:ml-2 bg-gray-700 text-white rounded-md"
                   value={selectedGenre}
@@ -200,8 +200,7 @@ const NavBar = () => {
                   {genres
                     .filter(
                       (genre) =>
-                        genre.type ===
-                        (selectedOption === "Movies" ? "movie" : "tv")
+                        genre.type === (selectedOption === 'Movies' ? 'movie' : 'tv')
                     )
                     .map((genre) => (
                       <option key={genre.id} value={genre.id}>
@@ -211,7 +210,6 @@ const NavBar = () => {
                 </select>
               )}
             </div>
-
             {searchQuery && (
               <div className="absolute left-0 top-full mt-2 w-auto max-h-60 overflow-y-auto bg-gray-800 rounded-md shadow-lg z-20">
                 {loading && <div className="text-white p-2">Loading...</div>}
@@ -220,13 +218,8 @@ const NavBar = () => {
                     {results.map((item) => (
                       <NavLink
                         key={item.id}
-                        to={`/${
-                          item.media_type === "tv" ? "series" : "movies"
-                        }/${item.id}`}
-                        onClick={() =>
-                          item.media_type === "movie" &&
-                          handleMovieClick(item.id)
-                        }
+                        to={`/${item.media_type === 'tv' ? 'series' : 'movies'}/${item.id}`}
+                        onClick={() => item.media_type === 'movie' && handleMovieClick(item.id)}
                       >
                         <li className="px-4 py-2 text-white hover:bg-gray-700 cursor-pointer flex items-center">
                           <img
@@ -235,11 +228,9 @@ const NavBar = () => {
                             className="w-16 h-24 object-cover mr-2"
                           />
                           <div>
-                            <h3 className="text-sm font-bold">
-                              {item.title || item.name}
-                            </h3>
+                            <h3 className="text-sm font-bold">{item.title || item.name}</h3>
                             <p className="text-xs text-gray-400">
-                              {item.release_date || item.first_air_date || ""}
+                              {item.release_date || item.first_air_date || ''}
                             </p>
                           </div>
                         </li>
@@ -247,86 +238,58 @@ const NavBar = () => {
                     ))}
                   </ul>
                 ) : (
-                  !loading && (
-                    <div className="text-white p-2">No results found</div>
-                  )
+                  !loading && <div className="text-white p-2">No results found</div>
                 )}
               </div>
             )}
           </div>
-
           <div className="hidden lg:flex space-x-4 text-white text-lg font-semibold">
-          <NavLink
-              to="/"
-              activeClassName="text-red-500"
-              className="hover:text-red-500"
-            >
+            <NavLink to="/" className={getClassName}>
               Home
             </NavLink>
-            <NavLink
-              to="/movies"
-              activeClassName="text-red-500"
-              className="hover:text-red-500"
-            >
+            <NavLink to="/movies" className={getClassName}>
               Movie
             </NavLink>
-            <NavLink
-              to="/series"
-              activeClassName="text-red-500"
-              className="hover:text-red-500"
-            >
+            <NavLink to="/series" className={getClassName}>
               Series
             </NavLink>
-            <NavLink
-              to="/about"
-              activeClassName="text-red-500"
-              className="hover:text-red-500"
-            >
+            <NavLink to="/about" className={getClassName}>
               About
             </NavLink>
           </div>
-
           <div className="lg:hidden">
-            <button
-              onClick={toggleMenu}
-              className="text-white focus:outline-none"
-            >
+            <button onClick={toggleMenu} className="text-white focus:outline-none">
               {isMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
             </button>
           </div>
         </div>
       </div>
-
       {isMenuOpen && (
-        <div className="lg:hidden bg-gray-900 text-white py-2 px-6">
+        <div className="lg:hidden flex-col flex bg-gray-900 text-white py-2 px-6">
           <NavLink
             to="/movies"
-            activeClassName="text-red-500"
-            className="block py-1 hover:text-red-500"
+            className={getClassName}
             onClick={() => setIsMenuOpen(false)}
           >
             Movies
           </NavLink>
           <NavLink
             to="/series"
-            activeClassName="text-red-500"
-            className="block py-1 hover:text-red-500"
+            className={getClassName}
             onClick={() => setIsMenuOpen(false)}
           >
             Series
           </NavLink>
           <NavLink
             to="/watchlist"
-            activeClassName="text-red-500"
-            className="block py-1 hover:text-red-500"
+            className={getClassName}
             onClick={() => setIsMenuOpen(false)}
           >
             Watchlist
           </NavLink>
           <NavLink
             to="/account"
-            activeClassName="text-red-500"
-            className="block py-1 hover:text-red-500"
+            className={getClassName}
             onClick={() => setIsMenuOpen(false)}
           >
             Account

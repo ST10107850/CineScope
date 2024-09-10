@@ -4,13 +4,15 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 import HomePage from "./Pages/HomePage";
 import MainLayout from "./Layout/MainLayout";
 import MoviesPage from "./Pages/MoviesPage";
 import SeriesPage from "./Pages/SeriesPage";
 import DetailPage from "./Pages/MoviesDetailPage";
 import SeriesDetailsPage from "./Pages/SeriesDetailsPage";
-import { seriesDetailLoader, detailLoader } from "./Loaders"; 
+import { seriesDetailLoader, detailLoader } from "./Loaders";
 
 function App() {
   const router = createBrowserRouter(

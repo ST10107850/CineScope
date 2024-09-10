@@ -26,9 +26,6 @@ const Hero = () => {
       console.log("Fetched data: ", data);
 
       const filteredMovies = data.results
-        .filter(
-          (movie) => movie.release_date && movie.release_date.startsWith("2024")
-        )
         .sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
 
       setSlides(filteredMovies.slice(0, 8));
@@ -54,7 +51,7 @@ const Hero = () => {
         isPlaying={true}
         interval={9000}
       >
-        <div className="relative w-full h-full md:h-[90vh]">
+        <div className="relative w-full h-[100vh]">
           <Slider>
             {slides.map((slide, index) => {
               const isLongDescription =
@@ -65,9 +62,9 @@ const Hero = () => {
               return (
                 <Slide key={index}>
                   <div
-                    className="relative w-full h-[100vh] md:h-full"
+                    className="relative w-full h-full"
                     style={{
-                      backgroundImage: `url(${`https://image.tmdb.org/t/p/w780${slide.poster_path}`})`,
+                      backgroundImage: `url(${`https://image.tmdb.org/t/p/w1280${slide.poster_path}`})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       height: "100%",
@@ -125,10 +122,10 @@ const Hero = () => {
             })}
           </Slider>
           <ButtonBack className="absolute hidden sm:block left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center text-2xl">
-            &lt;
+            <i className="fa fa-chevron-left" aria-hidden="true"></i>
           </ButtonBack>
           <ButtonNext className="absolute hidden sm:block right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center text-2xl">
-            &gt;
+            <i className="fa fa-chevron-right" aria-hidden="true"></i>
           </ButtonNext>
         </div>
       </CarouselProvider>

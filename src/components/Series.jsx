@@ -20,10 +20,10 @@ const Series = () => {
       console.log("Fetched data: ", data);
 
       const filteredSeries = data.results
-        .filter(
-          (show) =>
-            show.first_air_date && show.first_air_date.startsWith("2024")
-        )
+        // .filter(
+        //   (show) =>
+        //     show.first_air_date && show.first_air_date.startsWith("2024")
+        // )
         .sort(
           (a, b) => new Date(b.first_air_date) - new Date(a.first_air_date)
         );

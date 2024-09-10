@@ -42,7 +42,7 @@ const LatestMovies = ({ className }) => {
   const visibleSlides = isLg ? 4 : (isMd ? 3 : (isSm ? 2 : 2));
 
   return (
-    <div className={`relative h-full w-full overflow-hidden ${className}`}>
+    <div className={`relative md:mt-40 h-full w-full overflow-hidden ${className}`}>
       <CarouselProvider
         naturalSlideWidth={100}
         naturalSlideHeight={125}
@@ -69,7 +69,7 @@ const LatestMovies = ({ className }) => {
               <Slide key={index} index={index}>
                 <div className="flex justify-center items-center mx-2">
                   <Link to={`/movies/${movie.id}`}>
-                    <div className="relative w-full h-[300px] transition-transform duration-300 hover:scale-105">
+                    <div className="relative w-[300px] h-[400px] transition-transform duration-300 hover:scale-105">
                       <img
                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                         alt={movie.title}

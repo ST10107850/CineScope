@@ -24,10 +24,10 @@ const LatestSeries = ({ className }) => {
       console.log("Fetched data: ", data);
 
       const filteredSeries = data.results
-        .filter(
-          (show) =>
-            show.first_air_date && show.first_air_date.startsWith("2024")
-        )
+        // .filter(
+        //   (show) =>
+        //     show.first_air_date && show.first_air_date.startsWith("2024")
+        // )
         .sort(
           (a, b) => new Date(b.first_air_date) - new Date(a.first_air_date)
         );
@@ -52,7 +52,7 @@ const LatestSeries = ({ className }) => {
 
   return (
     <div className={`relative h-full w-full overflow-hidden ${className}`}>
-      {/* Horizontal Line Above */}
+
 
       <CarouselProvider
         naturalSlideWidth={100}
@@ -80,7 +80,7 @@ const LatestSeries = ({ className }) => {
               <Slide key={index} index={index}>
                 <div className="flex justify-center items-center mx-2">
                   <Link to={`/series/${series.id}`}>
-                    <div className="relative w-full h-[300px] transition-transform duration-300 hover:scale-105">
+                    <div className="relative w-[300px] h-[400px] transition-transform duration-300 hover:scale-105">
                       <img
                         src={`https://image.tmdb.org/t/p/w500${series.poster_path}`}
                         alt={series.original_name}
