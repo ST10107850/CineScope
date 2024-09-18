@@ -7,4 +7,9 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  css: {
+    preprocessorOptions: {
+      // Optionally, add configurations for SCSS or other preprocessors if needed
+    },
+  },
 });

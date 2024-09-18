@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
-import "pure-react-carousel/dist/react-carousel.es.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { useMediaQuery } from 'react-responsive';
 
 const LatestMovies = ({ className }) => {
@@ -15,7 +16,7 @@ const LatestMovies = ({ className }) => {
     try {
       const res = await fetch(apiUrl);
       const data = await res.json();
-      console.log("Fetched data: ", data);
+      console.log("Fetched data: ", data); // Log data to inspect structure
 
       const filteredMovies = data.results
         .filter(
@@ -34,76 +35,65 @@ const LatestMovies = ({ className }) => {
   }, []);
 
   // Media query hooks
-  const isSm = useMediaQuery({ query: '(min-width: 640px)' });
+  // const isSm = useMediaQuery({ query: '(min-width: 640px)' });
   const isMd = useMediaQuery({ query: '(min-width: 768px)' });
-  const isLg = useMediaQuery({query: '(min-width: 991px)'})
+  const isLg = useMediaQuery({ query: '(min-width: 991px)' });
 
-  // Determine visibleSlides based on screen size
-  const visibleSlides = isLg ? 4 : (isMd ? 3 : (isSm ? 2 : 2));
+  // Slick slider settings
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: isLg ? 4 : (isMd ? 3 : 2),
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: true,
+  };
 
   return (
-    <div className={`relative md:mt-40 h-full w-full overflow-hidden ${className}`}>
-      <CarouselProvider
-        naturalSlideWidth={100}
-        naturalSlideHeight={125}
-        totalSlides={movieItems.length}
-        visibleSlides={visibleSlides}
-        isPlaying={true}
-        interval={3000}
-        infinite={true}
-        touchEnabled={true}
-        dragEnabled={true}
-      >
-        <div className="relative w-full h-full px-6 sm:px-20  sm:mt-28">
-          <div className="relative w-full">
-            <div className="border-t-2 border-blue-500"></div>
-          </div>
-          <h2 className="text-white uppercase text-2xl font-bold my-4">
-            Latest Movies
-          </h2>
-          <div className="relative w-full">
-            <div className="border-t-2 border-blue-500 mt-4"></div>
-          </div>
-          <Slider className="relative mt-14">
-            {movieItems.map((movie, index) => (
-              <Slide key={index} index={index}>
-                <div className="flex justify-center items-center mx-2">
-                  <Link to={`/movies/${movie.id}`}>
-                    <div className="relative w-[300px] h-[400px] transition-transform duration-300 hover:scale-105">
-                      <img
-                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                        alt={movie.title}
-                        className="object-cover w-full h-full transition-opacity duration-300 hover:opacity-70"
-                      />
-                      <div className="absolute inset-0 bg-black opacity-20 transition-opacity duration-300 hover:opacity-30"></div>
-                      <div className="absolute inset-0 flex flex-col justify-end items-center text-white p-4">
-                        <h3 className="text-xl font-bold">{movie.title}</h3>
-                        <div className="flex flex-row items-center space-x-3">
-                          <p className="flex flex-row items-center">
-                            <AiFillStar className="text-blue-500" />
-                            {movie.vote_average}
-                          </p>
-                          <p className="flex flex-row items-center">
-                            <span>{movie.quality || "HD"}</span>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </Slide>
-            ))}
-          </Slider>
-          <div className="/md:block inset-y-1/2 flex justify-center items-center w-full px-6 sm:px-20 transform -translate-y-1/2 space-x-5">
-            <ButtonBack className="bg-gray-800 text-white px-4 py-2 rounded-full hover:bg-gray-600 transform transition-transform duration-300">
-              &larr;
-            </ButtonBack>
-            <ButtonNext className="bg-gray-800 text-white px-4 py-2 rounded-full hover:bg-gray-600 transform transition-transform duration-300">
-              &rarr;
-            </ButtonNext>
-          </div>
+    <div className={`relative h-full w-full overflow-hidden ${className}`}>
+      <div className="relative w-full h-full px-6 sm:px-20 sm:mt-28">
+        <div className="relative w-full">
+          <div className="border-t-2 border-blue-500"></div>
         </div>
-      </CarouselProvider>
+        <h2 className="text-white text-2xl uppercase font-bold my-4">
+          Latest Movies
+        </h2>
+        <div className="relative w-full">
+          <div className="border-t-2 border-blue-500 mt-4"></div>
+        </div>
+        <Slider {...settings} className="relative mt-14 h-full md:h-[400px]">
+          {movieItems.map((movie, index) => (
+            <div key={index} className="flex justify-center items-center mx-2">
+              <Link to={`/movies/${movie.id}`}>
+                <div className="relative w-full md:w-[290px] h-full transition-transform duration-300 hover:scale-105">
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title || "Movie Poster"} // Adjust alt text
+                    className="object-cover w-full h-full transition-opacity duration-300 hover:opacity-70"
+                  />
+                  <div className="absolute inset-0 bg-black opacity-20 transition-opacity duration-300 hover:opacity-30"></div>
+                  <div className="absolute inset-0 flex flex-col justify-end items-center text-white p-4 md:mb-10">
+                    <h3 className="text-xl font-bold">
+                      {movie.title || "Title Not Available"}
+                    </h3>
+                    <div className="flex flex-row items-center space-x-3">
+                      <p className="flex flex-row items-center">
+                        <AiFillStar className="text-blue-500" />
+                        {movie.vote_average || "N/A"}
+                      </p>
+                      <p className="flex flex-row items-center">
+                        <span>{movie.quality || "HD"}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 };

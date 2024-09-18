@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from "react-responsive";
+import Paginated from "../Js/Pagnation"; 
 
 const Movies = () => {
   const [moviesData, setMovies] = useState([]);
-  const [currentPage, setCurrentpage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedGenre, setSelectedGenre] = useState("All");
 
   const fetchMovies = async (page = 1, genre = "") => {
     const apiKey = "b3c8574ec4e0950c0501b1bf409be1e0";
-    const apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&page=${page}${
-      genre ? `&with_genres=${genre}` : ""
-    }`;
+    const apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&page=${page}${genre ? `&with_genres=${genre}` : ""}`;
 
     try {
       const res = await fetch(apiUrl);
@@ -20,14 +19,12 @@ const Movies = () => {
       console.log("Fetched data: ", data);
 
       const filteredMovies = data.results
-        .filter(
-          (movie) => movie.release_date && movie.release_date.startsWith("2024")
-        )
+        .filter(movie => movie.release_date && movie.release_date.startsWith("2024"))
         .sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
 
-      setMovies(filteredMovies);
+      setMovies(filteredMovies.slice(0,8));
       setTotalPages(data.total_pages);
-      setCurrentpage(page);
+      setCurrentPage(page);
     } catch (error) {
       console.log("Error fetching data: ", error);
     }
@@ -38,15 +35,14 @@ const Movies = () => {
     fetchMovies(currentPage, genreId);
   }, [currentPage, selectedGenre]);
 
-  const handlePageChange = (newPage) => {
-    if (newPage > 0 && newPage <= totalPages) {
-      setCurrentpage(newPage);
-    }
+  const handlePageClick = (event) => {
+    const newPage = event.selected + 1;
+    setCurrentPage(newPage);
   };
 
   const handleGenreChange = (genre) => {
     setSelectedGenre(genre);
-    setCurrentpage(1); // Reset to the first page when genre changes
+    setCurrentPage(1); // Reset to the first page when genre changes
   };
 
   const getGenreId = (genre) => {
@@ -64,11 +60,11 @@ const Movies = () => {
   };
 
   // Media query hook
-  const isMobile = useMediaQuery({ query: '(max-width: 639px)' });
-  const isMdOrLg = useMediaQuery({ query: '(min-width: 768px)' });
+  const isMobile = useMediaQuery({ query: "(max-width: 639px)" });
+  const isMdOrLg = useMediaQuery({ query: "(min-width: 768px)" });
 
   return (
-    <div className="p-4">
+    <div className="md:py-4 md:px-20 px-2">
       <h2 className="text-3xl font-bold mb-8 text-center uppercase text-white">
         {selectedGenre === "All"
           ? "Featured Movies"
@@ -77,7 +73,7 @@ const Movies = () => {
 
       <div className={`flex ${isMobile ? "flex-col" : "flex-row"} w-full`}>
         {!isMobile && (
-          <div className="hidden md:block w-1/4 mb-8 md:mb-0 md:mr-6 bg-slate-700 p-5 rounded-md h-full">
+          <div className="hidden md:block w-1/4 h-[350px] mb-8 md:mb-0 md:mr-6 bg-slate-700 p-5 rounded-md">
             <div className="space-y-4">
               <button
                 onClick={() => handleGenreChange("All")}
@@ -89,7 +85,6 @@ const Movies = () => {
               >
                 All
               </button>
-
               <div className="bg-white shadow-md rounded-md p-4">
                 <h3 className="text-md font-semibold mb-2">Genres</h3>
                 <div className="grid grid-cols-2 gap-2">
@@ -121,7 +116,7 @@ const Movies = () => {
           </div>
         )}
 
-        <div className={`flex-1 overflow-y-auto ${isMobile ? "w-full" : "md:w-3/4"} h-[60vh] md:h-[70vh]`}>
+        <div className={`flex-1 ${isMobile ? "w-full" : "md:w-3/4"} mb-8`}>
           {isMobile && (
             <div className="mb-4">
               <select
@@ -141,41 +136,25 @@ const Movies = () => {
               </select>
             </div>
           )}
-          <div className={`grid ${isMdOrLg ? "grid-cols-3" : "grid-cols-2"} gap-8`}>
+          <div className={`grid ${isMdOrLg ? "grid-cols-4" : "grid-cols-2"} gap-8`}>
             {moviesData.map((movie, index) => (
-              <div
-                key={index}
-                className="relative shadow-lg rounded-lg overflow-hidden group"
-              >
+              <div key={index} className="relative shadow-lg group md:w-[198px] md:h-[270px]">
                 <Link to={`/movies/${movie.id}`}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt={movie.title}
-                    className="w-full h-72 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </Link>
               </div>
             ))}
           </div>
-          <div className="flex justify-center mt-10 space-x-4">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600 disabled:opacity-50"
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span className="text-lg text-white">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600 disabled:opacity-50"
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
+
+          <Paginated
+            itemsPerPage={8}
+            pageCount={totalPages}
+            handlePageClick={handlePageClick}
+          />
         </div>
       </div>
     </div>

@@ -253,9 +253,6 @@ const NavBar = () => {
             <NavLink to="/series" className={getClassName}>
               Series
             </NavLink>
-            <NavLink to="/about" className={getClassName}>
-              About
-            </NavLink>
           </div>
           <div className="lg:hidden">
             <button onClick={toggleMenu} className="text-white focus:outline-none">
@@ -265,7 +262,7 @@ const NavBar = () => {
         </div>
       </div>
       {isMenuOpen && (
-        <div className="lg:hidden flex-col flex bg-gray-900 text-white py-2 px-6">
+        <div className="lg:hidden flex-col flex bg-gray-900 text-white py-4 px-6 space-y-4">
           <NavLink
             to="/movies"
             className={getClassName}
@@ -279,20 +276,6 @@ const NavBar = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Series
-          </NavLink>
-          <NavLink
-            to="/watchlist"
-            className={getClassName}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Watchlist
-          </NavLink>
-          <NavLink
-            to="/account"
-            className={getClassName}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Account
           </NavLink>
         </div>
       )}

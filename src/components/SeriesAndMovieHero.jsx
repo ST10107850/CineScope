@@ -37,7 +37,7 @@ const SeriesAndMovieHero = ({ title }) => {
         isPlaying={true}
         interval={3000}
       >
-        <div className="relative w-full h-full md:h-[85vh]">
+        <div className="relative w-full h-[40vh] md:h-[50vh]">
           <Slider>
             {slides.map((slide, index) => (
               <Slide key={index}>
@@ -46,14 +46,13 @@ const SeriesAndMovieHero = ({ title }) => {
                   style={{
                     backgroundImage: `url(${`https://image.tmdb.org/t/p/w780${slide.poster_path}`})`,
                     backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    height: '100%', 
+                    backgroundPosition: 'center', 
                     opacity: 0.9,
                   }}
                 >
-                  <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-30 mb-28">
+                  <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-30 md:mb-[400px]">
                     <h1 className="text-white font-bold uppercase text-3xl text-center mt-20">{slide.title}</h1>
-                    <p className="w-[80%] md:w-[50%] lg:w-[30%] text-white text-center hidden md:block mt-5">{slide.overview}</p>
+                    {/* <p className="w-[80%] md:w-[50%] lg:w-[30%] text-white text-center hidden md:block mt-5">{slide.overview}</p> */}
                   </div>
                 </div>
               </Slide>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
+import Paginated from "../Js/Pagnation";
 
 const Series = () => {
   const [seriesData, setSeries] = useState([]);
@@ -20,15 +21,11 @@ const Series = () => {
       console.log("Fetched data: ", data);
 
       const filteredSeries = data.results
-        // .filter(
-        //   (show) =>
-        //     show.first_air_date && show.first_air_date.startsWith("2024")
-        // )
         .sort(
           (a, b) => new Date(b.first_air_date) - new Date(a.first_air_date)
         );
 
-      setSeries(filteredSeries);
+      setSeries(filteredSeries.slice(0,8));
       setTotalPages(data.total_pages);
       setCurrentPage(page);
     } catch (error) {
@@ -71,14 +68,14 @@ const Series = () => {
   const isMdOrLg = useMediaQuery({ query: '(min-width: 768px)' });
 
   return (
-    <div className="p-4">
+    <div className="md:py-4 px-4 md:px-20">
       <h2 className="text-3xl font-bold mb-8 text-center uppercase text-white">
         {selectedGenre === "All" ? "Featured Series" : `${selectedGenre} Series`}
       </h2>
 
       <div className={`flex ${isMobile ? "flex-col" : "flex-row"} w-full`}>
         {!isMobile && (
-          <div className="hidden md:block w-1/4 mb-8 md:mb-0 md:mr-6 bg-slate-700 p-5 rounded-md h-full">
+          <div className="hidden md:block w-1/4 h-[370px] mb-8 md:mb-0 md:mr-6 bg-slate-700 p-5 rounded-md">
             <div className="space-y-4">
               <button
                 onClick={() => handleGenreChange("All")}
@@ -122,7 +119,7 @@ const Series = () => {
           </div>
         )}
 
-        <div className={`flex-1 overflow-y-auto ${isMobile ? "w-full" : "md:w-3/4"} h-[60vh] md:h-[70vh]`}>
+        <div className={`flex-1 ${isMobile ? "w-full" : "md:w-3/4"} `}>
           {isMobile && (
             <div className="mb-4">
               <select
@@ -142,41 +139,27 @@ const Series = () => {
               </select>
             </div>
           )}
-          <div className={`grid ${isMdOrLg ? "grid-cols-3" : "grid-cols-2"} gap-8`}>
+          <div className={`grid ${isMdOrLg ? "grid-cols-4" : "grid-cols-2"} gap-8`}>
             {seriesData.map((series) => (
               <div
                 key={series.id}
-                className="relative shadow-lg rounded-lg overflow-hidden group"
+                className="relative shadow-lg md:w-[198px] md:h-[270px] group"
               >
                 <Link to={`/series/${series.id}`}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500${series.poster_path}`}
                     alt={series.name}
-                    className="w-full h-72 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover  group-hover:scale-105 transition-transform duration-300"
                   />
                 </Link>
               </div>
             ))}
           </div>
-          <div className="flex justify-center mt-10">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600 disabled:opacity-50"
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span className="mx-4 text-lg text-white">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600 disabled:opacity-50"
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
+          <Paginated
+            itemsPerPage={8}
+            pageCount={totalPages}
+            handlePageClick={handlePageChange}
+          />
         </div>
       </div>
     </div>
