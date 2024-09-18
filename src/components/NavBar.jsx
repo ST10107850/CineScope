@@ -144,7 +144,7 @@ const NavBar = () => {
         scrolling ? 'bg-gray-900' : 'md:bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-2 md:px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-7">
             <NavLink to="/" className="text-white text-2xl font-bold">
