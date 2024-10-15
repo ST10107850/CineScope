@@ -100,7 +100,7 @@ const TvShows = () => {
                 All
               </button>
 
-              <div className="bg-white shadow-md rounded-md p-4">
+              <div className="bg-slate-500 shadow-md rounded-md p-4">
                 <h3 className="text-lg font-semibold mb-2">Genres</h3>
                 <div className="grid grid-cols-2 gap-2">
                   {[
@@ -137,7 +137,7 @@ const TvShows = () => {
               <select
                 value={selectedGenre}
                 onChange={(e) => handleGenreChange(e.target.value)}
-                className="w-full p-2 rounded-md bg-white text-black"
+                className="w-full p-2 rounded-md bg-slate-500 text-white"
               >
                 <option value="All">All</option>
                 <option value="Action">Action</option>
