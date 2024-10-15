@@ -1,14 +1,14 @@
 
 import SeriesAndMovieHero from '../components/SeriesAndMovieHero';
-import Series from '../components/Series';
+import TvShows from '../components/TvShows';
 
-const SeriesPage = () => {
+const TvShowsPage = () => {
   return (
     <div>
         <SeriesAndMovieHero title="Latest Series"/>
-        <Series/>
+        <TvShows/>
     </div>
   )
 }
 
-export default SeriesPage
+export default TvShowsPage

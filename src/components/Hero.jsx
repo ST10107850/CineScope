@@ -1,9 +1,10 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { AiFillStar } from "react-icons/ai";
 import { IoTime } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import "../assets/css/alice-carousel__dots.css";
 
 const Hero = () => {
   const [slides, setSlides] = useState([]);
@@ -40,7 +41,7 @@ const Hero = () => {
   const items = slides.map((slide, index) => {
     const isLongDescription = slide.overview.length > descriptionLimit;
     const shortDescription =
-      slide.overview.substring(0, descriptionLimit) + "...";
+      slide.overview.substring(0, descriptionLimit) + "......";
 
     const posterUrl = `https://image.tmdb.org/t/p/w1280${slide.poster_path}`;
 
@@ -53,12 +54,13 @@ const Hero = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          height: "60vh", // Ensure the height is set
+          height: "100vh",
         }}
       >
-        <div className="absolute inset-0 bg-black opacity-30"></div>
-        <div className="absolute inset-0 flex flex-col justify-center items-start text-white p-12 ml-10 ">
-          <div className="text-base sm:text-xl md:text-3xl font-bold mb-4">
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+
+        <div className="absolute inset-0 flex flex-col justify-end mb-5 items-start text-white p-12  z-10">
+          <div className="text-base sm:text-xl md:text-2xl font-bold mb-4">
             {slide.original_title}
           </div>
           <div className="flex space-x-4 mb-4 text-xs sm:text-sm md:text-base">
@@ -109,16 +111,10 @@ const Hero = () => {
     <div className="relative bg-dark-custom overflow-hidden">
       <AliceCarousel
         autoPlay
-        autoPlayInterval={9000}
+        autoPlayInterval={7000}
         infinite
         disableButtonsControls
         items={items}
-        renderPrevButton={() => (
-          <div className="absolute left-0 z-10">Prev</div>
-        )}
-        renderNextButton={() => (
-          <div className="absolute right-0 z-10">Next</div>
-        )}
       />
     </div>
   );

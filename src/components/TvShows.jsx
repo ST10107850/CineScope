@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from "react-responsive";
 import Paginated from "../Js/Pagnation";
+import { ClipLoader } from "react-spinners";
 
-const Series = () => {
-  const [seriesData, setSeries] = useState([]);
+const TvShows = () => {
+  const [tvShowsData, setTvShows] = useState([]); // Changed from seriesData to tvShowsData
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedGenre, setSelectedGenre] = useState("All");
+  const [loading, setLoading] = useState(true);
 
-  const fetchSeries = async (page = 1, genre = "") => {
+  const fetchTvShows = async (page = 1, genre = "") => {
+    // Changed from fetchSeries to fetchTvShows
     const apiKey = "b3c8574ec4e0950c0501b1bf409be1e0";
-    const apiUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&page=${page}${
+    const apiUrl = `https://api.themoviedb.org/3/tv/on_the_air?sort_by=popularity.desc&api_key=${apiKey}&page=${page}${
       genre ? `&with_genres=${genre}` : ""
     }`;
 
@@ -20,12 +23,11 @@ const Series = () => {
       const data = await res.json();
       console.log("Fetched data: ", data);
 
-      const filteredSeries = data.results
-        .sort(
-          (a, b) => new Date(b.first_air_date) - new Date(a.first_air_date)
-        );
+      const filteredTvShows = data.results.sort(
+        (a, b) => new Date(b.first_air_date) - new Date(a.first_air_date)
+      );
 
-      setSeries(filteredSeries.slice(0,8));
+      setTvShows(filteredTvShows.slice(0, 8));
       setTotalPages(data.total_pages);
       setCurrentPage(page);
     } catch (error) {
@@ -35,10 +37,18 @@ const Series = () => {
 
   useEffect(() => {
     const genreId = getGenreId(selectedGenre);
-    fetchSeries(currentPage, genreId);
+    setLoading(true);
+    fetchTvShows(currentPage, genreId);
+
+    const timer = setTimeout(() => {
+      setLoading(false); 
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, [currentPage, selectedGenre]);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = ({ selected }) => {
+    const newPage = selected + 1; // ReactPaginate uses 0-based index
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
     }
@@ -63,14 +73,16 @@ const Series = () => {
     return genres[genre] || "";
   };
 
-  // Media query hook
-  const isMobile = useMediaQuery({ query: '(max-width: 639px)' });
-  const isMdOrLg = useMediaQuery({ query: '(min-width: 768px)' });
+  const isMobile = useMediaQuery({ query: "(max-width: 639px)" });
+  const isMdOrLg = useMediaQuery({ query: "(min-width: 768px)" });
 
   return (
     <div className="md:py-4 px-4 md:px-20">
       <h2 className="text-3xl font-bold mb-8 text-center uppercase text-white">
-        {selectedGenre === "All" ? "Featured Series" : `${selectedGenre} Series`}
+        {selectedGenre === "All"
+          ? "Featured TV Shows"
+          : `${selectedGenre} TV Shows`}{" "}
+        {/* Updated text */}
       </h2>
 
       <div className={`flex ${isMobile ? "flex-col" : "flex-row"} w-full`}>
@@ -139,21 +151,29 @@ const Series = () => {
               </select>
             </div>
           )}
-          <div className={`grid ${isMdOrLg ? "grid-cols-4" : "grid-cols-2"} gap-8`}>
-            {seriesData.map((series) => (
-              <div
-                key={series.id}
-                className="relative shadow-lg md:w-[198px] md:h-[270px] group"
-              >
-                <Link to={`/series/${series.id}`}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${series.poster_path}`}
-                    alt={series.name}
-                    className="w-full h-full object-cover  group-hover:scale-105 transition-transform duration-300"
-                  />
-                </Link>
-              </div>
-            ))}
+          <div
+            className={`grid ${isMdOrLg ? "grid-cols-4" : "grid-cols-2"} gap-8`}
+          >
+            {loading ? (<div className="flex justify-center items-center w-full h-[400px]"> {/* Adjust the height as needed */}
+                <ClipLoader color="#36d7b7" loading={loading} size={90} />
+              </div>): (
+            tvShowsData.map(
+              (tvShow) =>
+                tvShow.poster_path && (
+                  <div
+                    key={tvShow.id}
+                    className="relative shadow-lg md:w-[198px] md:h-[270px] group"
+                  >
+                    <Link to={`/tv/${tvShow.id}`}>
+                      <img
+                        src={`https://image.tmdb.org/t/p/w500${tvShow.poster_path}`}
+                        alt={tvShow.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </Link>
+                  </div>
+                ))
+              )}
           </div>
           <Paginated
             itemsPerPage={8}
@@ -166,4 +186,4 @@ const Series = () => {
   );
 };
 
-export default Series;
+export default TvShows;

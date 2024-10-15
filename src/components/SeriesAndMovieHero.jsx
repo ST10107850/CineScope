@@ -32,7 +32,7 @@ const SeriesAndMovieHero = ({ title }) => {
     <div className="relative bg-dark-custom overflow-hidden">
       <CarouselProvider
         naturalSlideWidth={100}
-        naturalSlideHeight={56.25} // Adjust height to maintain aspect ratio
+        naturalSlideHeight={56.25} 
         totalSlides={slides.length}
         isPlaying={true}
         interval={3000}
@@ -52,7 +52,6 @@ const SeriesAndMovieHero = ({ title }) => {
                 >
                   <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-30 md:mb-[400px]">
                     <h1 className="text-white font-bold uppercase text-3xl text-center mt-20">{slide.title}</h1>
-                    {/* <p className="w-[80%] md:w-[50%] lg:w-[30%] text-white text-center hidden md:block mt-5">{slide.overview}</p> */}
                   </div>
                 </div>
               </Slide>

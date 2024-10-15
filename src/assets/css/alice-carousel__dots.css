@@ -1,0 +1,17 @@
+.alice-carousel__dots {
+    position: absolute;
+    bottom: 20px; /* Position the dots at the bottom of the carousel */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .alice-carousel__dots-item {
+    background-color: #fff;
+    opacity: 0.5;
+  }
+  
+  .alice-carousel__dots-item.__active {
+    background-color: #ff0000; /* Change the color of the active dot */
+    opacity: 1;
+  }
+  

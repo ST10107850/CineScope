@@ -1,7 +1,6 @@
 import Hero from "../components/Hero";
-import LatestMovies from "../components/LatestMovies";
-import LatestSeries from "../components/LatestSeries";
-// import NavBar from "../components/NavBar";
+import TopMovies from "../components/TopMovies";
+import TopShows from "../components/TopShows";
 import TopSlider from "../components/TopSlider";
 
 const HomePage = () => {
@@ -9,8 +8,8 @@ const HomePage = () => {
     <div>
       <Hero />
       <TopSlider />
-      <LatestMovies />
-      <LatestSeries />
+      <TopMovies/>
+      <TopShows/>
     </div>
   );
 };

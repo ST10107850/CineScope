@@ -19,10 +19,10 @@ const TopSlider = ({ className }) => {
       console.log("Fetched data: ", data);
 
       const filteredSeries = data.results
-        // .filter(
-        //   (show) =>
-        //     show.first_air_date && show.first_air_date.startsWith("2024")
-        // )
+        .filter(
+          (show) =>
+            show.first_air_date && show.first_air_date.startsWith("2024")
+        )
         .sort((a, b) => new Date(b.first_air_date) - new Date(a.first_air_date));
 
       setSeries(filteredSeries.slice(0, 8));
@@ -35,7 +35,7 @@ const TopSlider = ({ className }) => {
     fetchSeries();
   }, []);
 
-  // Slick slider settings
+
   const settings = {
     dots: false,
     infinite: true,
@@ -70,7 +70,8 @@ const TopSlider = ({ className }) => {
   return (
     <div className={`relative h-[40vh] ${className} overflow-hidden`}>
       <div className="absolute bg-dark-custom top-0 left-0 w-full">
-        <Slider {...settings} className="relative">
+        <h1 className="text-center text-white text-base">Top Tranding</h1>
+        <Slider {...settings} className="relative mt-2">
           {movieItems.map((slide, slideIndex) => (
             <div key={slideIndex} className="flex w-full h-[40vh] px-2">
               <Link to={`/series/${slide.id}`}>
@@ -78,11 +79,11 @@ const TopSlider = ({ className }) => {
                   <img
                     src={`https://image.tmdb.org/t/p/w500${slide.poster_path}`}
                     alt={slide.original_name}
-                    className="object-cover w-full h-full transition-opacity duration-300 hover:opacity-70"
+                    className="object-cover w-full h-full transition-opacity duration-300 opacity-50 hover:opacity-70"
                   />
                   <div className="absolute inset-0 bg-black opacity-20 transition-opacity duration-300 hover:opacity-30"></div>
                   <div className="absolute inset-0 flex flex-col justify-end items-center text-white p-4">
-                    <h3 className="text-md font-bold mb-4">
+                    <h3 className="text-md font-bold mb-10">
                       {slide.original_name}
                     </h3>
                   </div>

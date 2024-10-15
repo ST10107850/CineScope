@@ -144,17 +144,18 @@ const NavBar = () => {
         scrolling ? 'bg-gray-900' : 'md:bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-2 md:px-6 py-4">
+      <div className="w-full px-2 md:px-12 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-7">
-            <NavLink to="/" className="text-white text-2xl font-bold">
+            <NavLink to="/" className="text-white text-3xl font-bold">
               <i className="bx bx-movie-play bx-tada text-red-500"></i>
               <span className="inline">Cine</span>
               <span className="text-red-500">S</span>
               <span className="hidden md:inline">cope</span>
             </NavLink>
-
-            <div className="relative flex flex-col md:flex-row items-center w-full">
+          </div>
+          <div>
+          <div className="relative flex flex-col md:flex-row items-center w-full">
               <div className="flex items-center bg-transparent border border-white text-white rounded-2xl px-2 py-1 w-full lg:w-96 md:w-64 sm:w-48">
                 <FiSearch className="text-white w-5 h-5 mr-2" />
                 <div className="relative flex-grow">
@@ -192,7 +193,7 @@ const NavBar = () => {
               </div>
               {(selectedOption === 'Movies' || selectedOption === 'Series') && (
                 <select
-                  className="mt-2 md:mt-0 md:ml-2 bg-gray-700 text-white rounded-md"
+                  className="mt-2 md:mt-0 md:ml-2 bg-gray-700 border px-2 py-1 text-white rounded-md"
                   value={selectedGenre}
                   onChange={handleGenreChange}
                 >
@@ -210,6 +211,7 @@ const NavBar = () => {
                 </select>
               )}
             </div>
+
             {searchQuery && (
               <div className="absolute left-0 top-full mt-2 w-auto max-h-60 overflow-y-auto bg-gray-800 rounded-md shadow-lg z-20">
                 {loading && <div className="text-white p-2">Loading...</div>}
@@ -242,6 +244,7 @@ const NavBar = () => {
                 )}
               </div>
             )}
+
           </div>
           <div className="hidden lg:flex space-x-4 text-white text-lg font-semibold">
             <NavLink to="/" className={getClassName}>
@@ -250,9 +253,10 @@ const NavBar = () => {
             <NavLink to="/movies" className={getClassName}>
               Movie
             </NavLink>
-            <NavLink to="/series" className={getClassName}>
-              Series
+            <NavLink to="/tv" className={getClassName}>
+              Tv Shows
             </NavLink>
+            
           </div>
           <div className="lg:hidden">
             <button onClick={toggleMenu} className="text-white focus:outline-none">
@@ -261,6 +265,8 @@ const NavBar = () => {
           </div>
         </div>
       </div>
+
+
       {isMenuOpen && (
         <div className="lg:hidden flex-col flex bg-gray-900 text-white py-4 px-6 space-y-4">
           <NavLink
@@ -271,11 +277,11 @@ const NavBar = () => {
             Movies
           </NavLink>
           <NavLink
-            to="/series"
+            to="/tv"
             className={getClassName}
             onClick={() => setIsMenuOpen(false)}
           >
-            Series
+            Tv Shows
           </NavLink>
         </div>
       )}

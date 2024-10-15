@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import Paginated from "../Js/Pagnation"; 
+import Paginated from "../Js/Pagnation";
+import { ClipLoader } from "react-spinners";
 
 const Movies = () => {
   const [moviesData, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedGenre, setSelectedGenre] = useState("All");
+  const [loading, setLoading] = useState(true);
 
   const fetchMovies = async (page = 1, genre = "") => {
     const apiKey = "b3c8574ec4e0950c0501b1bf409be1e0";
-    const apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&page=${page}${genre ? `&with_genres=${genre}` : ""}`;
+    const apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&page=${page}${
+      genre ? `&with_genres=${genre}` : ""
+    }`;
 
     try {
       const res = await fetch(apiUrl);
@@ -19,20 +23,31 @@ const Movies = () => {
       console.log("Fetched data: ", data);
 
       const filteredMovies = data.results
-        .filter(movie => movie.release_date && movie.release_date.startsWith("2024"))
+        .filter(
+          (movie) => movie.release_date && movie.release_date.startsWith("2024")
+        )
         .sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
 
-      setMovies(filteredMovies.slice(0,8));
+      setMovies(filteredMovies.slice(0, 8));
       setTotalPages(data.total_pages);
       setCurrentPage(page);
     } catch (error) {
       console.log("Error fetching data: ", error);
+    } finally {
+      // This will be set after the delay
     }
   };
 
   useEffect(() => {
     const genreId = getGenreId(selectedGenre);
+    setLoading(true); // Start loading
     fetchMovies(currentPage, genreId);
+
+    const timer = setTimeout(() => {
+      setLoading(false); 
+    }, 3000);
+
+    return () => clearTimeout(timer); // Cleanup the timer
   }, [currentPage, selectedGenre]);
 
   const handlePageClick = (event) => {
@@ -42,7 +57,7 @@ const Movies = () => {
 
   const handleGenreChange = (genre) => {
     setSelectedGenre(genre);
-    setCurrentPage(1); // Reset to the first page when genre changes
+    setCurrentPage(1);
   };
 
   const getGenreId = (genre) => {
@@ -59,7 +74,6 @@ const Movies = () => {
     return genres[genre] || "";
   };
 
-  // Media query hook
   const isMobile = useMediaQuery({ query: "(max-width: 639px)" });
   const isMdOrLg = useMediaQuery({ query: "(min-width: 768px)" });
 
@@ -136,18 +150,29 @@ const Movies = () => {
               </select>
             </div>
           )}
-          <div className={`grid ${isMdOrLg ? "grid-cols-4" : "grid-cols-2"} gap-8`}>
-            {moviesData.map((movie, index) => (
-              <div key={index} className="relative shadow-lg group md:w-[198px] md:h-[270px]">
-                <Link to={`/movies/${movie.id}`}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </Link>
+          <div
+            className={`grid ${isMdOrLg ? "grid-cols-4" : "grid-cols-2"} gap-8`}
+          >
+            {loading ? (
+              <div className="flex justify-center items-center w-full h-[400px]"> {/* Adjust the height as needed */}
+                <ClipLoader color="#36d7b7" loading={loading} size={90} />
               </div>
-            ))}
+            ) : (
+              moviesData.map((movie, index) => (
+                <div
+                  key={index}
+                  className="relative shadow-lg group md:w-[198px] md:h-[270px]"
+                >
+                  <Link to={`/movies/${movie.id}`}>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                      alt={movie.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </Link>
+                </div>
+              ))
+            )}
           </div>
 
           <Paginated
