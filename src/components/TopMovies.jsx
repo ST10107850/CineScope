@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useMediaQuery } from 'react-responsive';
+import PropTypes from 'prop-types';
 
 const TopMovies = ({ className }) => {
   const [movieItems, setMovies] = useState([]);
@@ -18,11 +19,9 @@ const TopMovies = ({ className }) => {
       const data = await res.json();
       console.log("Fetched data: ", data); 
 
-      const filteredMovies = data.results
-        .filter(
-          (movie) => movie.release_date && movie.release_date.startsWith("2024")
-        )
-        .sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+      const filteredMovies = data.results.sort(
+        (a, b) => new Date(b.first_air_date) - new Date(a.first_air_date)
+      );
 
       setMovies(filteredMovies.slice(0, 10));
     } catch (error) {
@@ -99,6 +98,9 @@ const TopMovies = ({ className }) => {
       </div>
     </div>
   );
+};
+TopMovies.propTypes = {
+  className: PropTypes.string,
 };
 
 export default TopMovies;

@@ -1,10 +1,9 @@
-import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { IoTime } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import PropTypes from "prop-types";
 
 const TopSlider = ({ className }) => {
   const [movieItems, setSeries] = useState([]);
@@ -16,14 +15,9 @@ const TopSlider = ({ className }) => {
     try {
       const res = await fetch(apiUrl);
       const data = await res.json();
-      console.log("Fetched data: ", data);
+      console.log("Fetched data: ", data.results);
 
-      const filteredSeries = data.results
-        .filter(
-          (show) =>
-            show.first_air_date && show.first_air_date.startsWith("2024")
-        )
-        .sort((a, b) => new Date(b.first_air_date) - new Date(a.first_air_date));
+      const filteredSeries = data.results;
 
       setSeries(filteredSeries.slice(0, 8));
     } catch (error) {
@@ -96,5 +90,7 @@ const TopSlider = ({ className }) => {
     </div>
   );
 };
-
+TopSlider.propTypes = {
+  className: PropTypes.string,
+};
 export default TopSlider;

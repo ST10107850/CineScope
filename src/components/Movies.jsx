@@ -44,7 +44,7 @@ const Movies = () => {
     fetchMovies(currentPage, genreId);
 
     const timer = setTimeout(() => {
-      setLoading(false); 
+      setLoading(false);
     }, 3000);
 
     return () => clearTimeout(timer); // Cleanup the timer
@@ -154,7 +154,9 @@ const Movies = () => {
             className={`grid ${isMdOrLg ? "grid-cols-4" : "grid-cols-2"} gap-8`}
           >
             {loading ? (
-              <div className="flex justify-center items-center w-full h-[400px]"> {/* Adjust the height as needed */}
+              <div className="flex justify-center items-center w-full h-[400px]">
+                {" "}
+                {/* Adjust the height as needed */}
                 <ClipLoader color="#36d7b7" loading={loading} size={90} />
               </div>
             ) : (

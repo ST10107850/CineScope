@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useMediaQuery } from "react-responsive";
+import PropTypes from "prop-types";
 
 const TopShows = ({ className }) => {
   const [seriesItems, setSeries] = useState([]);
@@ -97,6 +98,9 @@ const TopShows = ({ className }) => {
       </div>
     </div>
   );
+};
+TopShows.propTypes = {
+  className: PropTypes.string,
 };
 
 export default TopShows;
