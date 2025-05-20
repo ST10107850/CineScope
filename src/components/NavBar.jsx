@@ -148,10 +148,9 @@ const NavBar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-7">
             <NavLink to="/" className="text-white text-3xl font-bold">
-              <i className="bx bx-movie-play bx-tada text-red-500"></i>
-              <span className="inline">Cine</span>
-              <span className="text-red-500">S</span>
-              <span className="hidden md:inline">cope</span>
+              <div className="flex rounded-full w-20 h-20">
+                <img src="./logo.svg" alt="Logo" className="w-full h-full object-cover" />
+              </div>
             </NavLink>
           </div>
           <div>
