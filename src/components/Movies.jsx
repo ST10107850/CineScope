@@ -22,32 +22,28 @@ const Movies = () => {
       const data = await res.json();
       console.log("Fetched data: ", data);
 
-      const filteredMovies = data.results
-        .filter(
-          (movie) => movie.release_date && movie.release_date.startsWith("2024")
-        )
-        .sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+      const filteredMovies = data.results.sort(
+        (a, b) => new Date(b.first_air_date) - new Date(a.first_air_date)
+      );
 
       setMovies(filteredMovies.slice(0, 8));
       setTotalPages(data.total_pages);
       setCurrentPage(page);
     } catch (error) {
       console.log("Error fetching data: ", error);
-    } finally {
-      // This will be set after the delay
     }
   };
 
   useEffect(() => {
     const genreId = getGenreId(selectedGenre);
-    setLoading(true); // Start loading
+    setLoading(true);
     fetchMovies(currentPage, genreId);
 
     const timer = setTimeout(() => {
       setLoading(false);
     }, 3000);
 
-    return () => clearTimeout(timer); // Cleanup the timer
+    return () => clearTimeout(timer);
   }, [currentPage, selectedGenre]);
 
   const handlePageClick = (event) => {

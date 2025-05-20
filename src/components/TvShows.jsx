@@ -5,14 +5,13 @@ import Paginated from "../Js/Pagnation";
 import { ClipLoader } from "react-spinners";
 
 const TvShows = () => {
-  const [tvShowsData, setTvShows] = useState([]); // Changed from seriesData to tvShowsData
+  const [tvShowsData, setTvShows] = useState([]); 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedGenre, setSelectedGenre] = useState("All");
   const [loading, setLoading] = useState(true);
 
   const fetchTvShows = async (page = 1, genre = "") => {
-    // Changed from fetchSeries to fetchTvShows
     const apiKey = "b3c8574ec4e0950c0501b1bf409be1e0";
     const apiUrl = `https://api.themoviedb.org/3/tv/on_the_air?sort_by=popularity.desc&api_key=${apiKey}&page=${page}${
       genre ? `&with_genres=${genre}` : ""
